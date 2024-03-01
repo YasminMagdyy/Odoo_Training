@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+
+    <record id="product_template_form_view" model="ir.ui.view" >
+        <field name="name">product_template_form_view</field>
+        <field name="model">xx.product.template.wizard</field>
+        <field name="arch" type="xml">
+        <form string="Print Report">
+            <group>
+                <field name="xx_location_id" options='{"no_open": True,"no_create": True}' attrs="{'required':True}"/>            
+                <footer>
+                        <button name="generate_excel_report" type="object" string="Generate excel" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                </footer>
+            </group>
+        </form>
+        </field>
+    </record>
+
+    <record id="xx_action_product_template_wizard" model="ir.actions.act_window">
+      <field name="name">Product Template Report</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">xx.product.template.wizard</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="product_template_form_view"/>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem 
+        id="product_template_menu" 
+        parent="menu_our_reports" 
+        action="xx_action_product_template_wizard"
+        groups="depo.xx_Role_Depo_Team_leader,depo.xx_role_depo_workshop,xx_role_depo_planner,xx_account_extended.Role_Accounting_Admin,xx_account_extended.Role_AR_Accountant"
+        name="Product Template Report"
+        />
+
+    <report
+        id="product_template_xls"
+        model="stock.quant"
+        string="Product Template Report"
+        report_type="xlsx"
+        name="depo.product_template_report.xlsx"
+        file="depo.product_template_report.xlsx"
+        attachment_use="False"
+        menu="False"
+    />
+
+
+</data>
+</openerp>
+
